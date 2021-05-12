@@ -64,6 +64,9 @@ foreach($top_comments as $c):
       <li<?php if($pf==='ios'):?> class="active"<?php endif?> id="ios">
         <a href="<?="?id={$app->getId()}&pf=ios"?>">iOS</a>
       </li>
+      <li<?php if($pf==='uwp'):?> class="active"<?php endif?> id="uwp">
+        <a href="<?="?id={$app->getId()}&pf=uwp"?>">UWP</a>
+      </li>
       <li<?php if($pf==='other'):?> class="active"<?php endif?> id="other">
         <a href="<?="?id={$app->getId()}&pf=other"?>">Other</a>
       </li>

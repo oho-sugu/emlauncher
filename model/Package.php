@@ -15,10 +15,12 @@ class Package extends mfwObject {
 
 	const PF_ANDROID = 'Android';
 	const PF_IOS = 'iOS';
+	const PF_UWP = 'UWP';
 	const PF_UNKNOWN = 'unknown';
 	const MIME_ANDROID_APK = 'application/vnd.android.package-archive';
 	const MIME_ANDROID_AAB = 'application/octet-stream';
 	const MIME_IOS = 'application/octet-stream';
+	const MIME_UWP = 'application/octet-stream';
 
 	const FILE_DIR = 'package/';
 	const TEMP_DIR = 'temp-data/';
@@ -259,6 +261,22 @@ class PackageDb extends mfwObjectDb {
 		if($is_zip && $ext==='ipa'){
 			$platform = Package::PF_IOS;
 			$mime = Package::MIME_IOS;
+		}
+		if($is_zip && $ext==='appx'){
+			$platform = Package::PF_UWP;
+			$mime = Package::MIME_UWP;
+		}
+		if($is_zip && $ext==='appxbundle'){
+			$platform = Package::PF_UWP;
+			$mime = Package::MIME_UWP;
+		}
+		if($is_zip && $ext==='msix'){
+			$platform = Package::PF_UWP;
+			$mime = Package::MIME_UWP;
+		}
+		if($is_zip && $ext==='msixbundle'){
+			$platform = Package::PF_UWP;
+			$mime = Package::MIME_UWP;
 		}
 		return array($platform,$ext,$mime);
 	}

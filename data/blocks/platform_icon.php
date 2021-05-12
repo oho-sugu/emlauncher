@@ -8,6 +8,10 @@ case 'iOS':
 	$icon = 'fa-apple';
 	$name = ' iOS';
 	break;
+case 'UWP':
+	$icon = 'fa-windows';
+	$name = ' UWP';
+	break;
 default:
 	$icon = 'fa-desktop';
 	$name = ' unknown';

@@ -26,11 +26,12 @@ class installActions extends packageActions
 	{
 		$pf = $this->package->getPlatform();
 		$ua = mfwRequest::userAgent();
+		$raw = false;
 
+		$scheme = Config::get('enable_https')?'https':null; // HTTPSが使えるならHTTPS優先
 		if($pf===Package::PF_IOS && $ua->isIOS()){
 			// itms-service での接続はセッションを引き継げない
 			// 一時トークンをURLパラメータに付けることで認証する
-			$scheme = Config::get('enable_https')?'https':null; // HTTPSが使えるならHTTPS優先
 			$plist_url = mfwHttp::composeUrl(
 				mfwRequest::makeUrl('/package/install_plist',$scheme),
 				array(
@@ -46,6 +47,10 @@ class installActions extends packageActions
 				$target = $this->package;
 			}
 			$url = $target->getFileUrl(self::TIME_LIMIT);
+		}
+		else if($pf===Package::PF_UWP){
+			$url = 'ms-appinstaller:?source='.mfwRequest::makeUrl($this->package->getFileUrl(self::TIME_LIMIT),$scheme);
+			$raw = true;
 		}
 		else{
 			// それ以外のアクセスはパッケージを直接DL
@@ -68,7 +73,7 @@ class installActions extends packageActions
 			throw $e;
 		}
 
-		return $this->redirect($url);
+		return $this->redirect($url,array(),$raw);
 	}
 
 	public function executeInstall_plist()
